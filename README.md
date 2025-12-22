@@ -40,7 +40,7 @@ All SQL logic is written in **PostgreSQL** and organized in the `/sql` folder.
 
 ### 🔹 Monthly Churn Rate & MoM Change
 📄 **SQL File:**  
-[`Monthly Churn Rate.sql`](./Monthly Churn Rate.sql)
+[`Monthly Churn Rate.sql`](Monthly Churn Rate.sql)
 
 **Purpose:**  
 - Calculates monthly churn rate  
