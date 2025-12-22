@@ -1,91 +1,123 @@
-# SaaS Subscription Analytics Dashboard (SQL + Power BI)
+# SaaS Subscription Analytics Dashboard (SQL & Power BI)
 
 ## 📌 Project Overview
 This project demonstrates an end-to-end analytics workflow for a SaaS-style business using **PostgreSQL** and **Power BI**.  
-The goal is to analyze **customer churn, subscription health, and user engagement** through realistic business KPIs.
+The objective is to analyze **customer churn, subscription health, and user engagement** through realistic business KPIs.
 
-⚠️ **Note:**  
+⚠️ **Important Note**  
 The dataset used in this project is **synthetically generated (random data)**.  
-However, the **analysis logic, KPIs, SQL queries, and dashboard design reflect real-world SaaS analytics practices**.
+However, the **SQL logic, KPIs, and dashboard design reflect real-world SaaS analytics practices**.
 
 ---
 
 ## 🎯 Business Questions Answered
-
-1. **What is our monthly churn rate, and how is it changing over time?**
-2. **How are subscriptions distributed across Active, Paused, and Canceled states?**
-3. **Are “Ghost Users” (paying but inactive users) creating retention risk?**
-4. **Which subscription plans have the highest ghost user concentration?**
+- What is our **monthly churn rate**, and how is it changing over time?
+- How are subscriptions distributed across **Active, Paused, and Canceled** states?
+- Are **Ghost Users** (paying but inactive users) creating retention risk?
+- Which subscription plans show the **highest ghost user concentration**?
 
 ---
 
 ## 🧩 Data Model
+The project is built using the following tables:
+- `users` – customer profile and acquisition data  
+- `subscriptions` – subscription lifecycle and status  
+- `plans` – pricing and plan information  
+- `activity_logs` – user engagement events  
+- `calendar` – date dimension for time intelligence  
 
-The project uses the following core tables:
-
-- `users` – Customer profile and acquisition details  
-- `subscriptions` – Subscription lifecycle, plan, and status  
-- `plans` – Pricing and plan information  
-- `activity_logs` – User engagement events  
-- `calendar` – Date dimension for time intelligence  
-
-All analytical results are created using **SQL Views**, which are then consumed by Power BI.
+All transformations are handled using **SQL Views**, which are then consumed by Power BI.
 
 ---
 
-## 🧮 Key Metrics & Definitions
+## 🧮 SQL Logic & Data Modeling
 
-- **Churn Rate (%)**  
-  Percentage of active customers who canceled in a given month.
+All SQL logic is written in **PostgreSQL** and organized in the `/sql` folder.
 
-- **Month-over-Month Churn Change (%)**  
-  Measures improvement or deterioration in churn compared to the previous month.
-
-- **Ghost Users (%)**  
-  Active subscribers with **no activity in the last 30 days**.
-
-- **Subscription Status Distribution**  
-  Breakdown of Active, Paused, and Canceled subscriptions by plan.
+> ⚠️ The data is synthetic, but the SQL mirrors **production-grade SaaS analytics logic**.
 
 ---
 
-## 📊 Dashboard Components
+### 🔹 Monthly Churn Rate & MoM Change
+📄 **SQL File:**  
+[`sql/vw_monthly_churn.sql`](./sql/vw_monthly_churn.sql)
+
+**Purpose:**  
+- Calculates monthly churn rate  
+- Computes month-over-month churn percentage using window functions  
+
+**Key Techniques:**  
+- CTEs  
+- `DATE_TRUNC()`  
+- `LAG()` window function  
+
+---
+
+### 🔹 Subscription Status Distribution by Plan
+📄 **SQL File:**  
+[`sql/vw_subscription_status_by_plan.sql`](./sql/vw_subscription_status_by_plan.sql)
+
+**Purpose:**  
+- Breaks down Active, Paused, and Canceled subscriptions by plan  
+- Generates percentage metrics for stacked visuals  
+
+**Key Techniques:**  
+- Conditional aggregation  
+- `FILTER()` clause  
+
+---
+
+### 🔹 Ghost Users Detection & Metrics
+📄 **SQL File:**  
+[`sql/vw_ghost_users_metrics.sql`](./sql/vw_ghost_users_metrics.sql)
+
+**Definition:**  
+Ghost users are customers with an **Active subscription** but **no activity in the last 30 days**.
+
+**Purpose:**  
+- Identifies ghost users  
+- Calculates ghost user count and percentage by plan  
+
+**Key Techniques:**  
+- Left joins  
+- Activity recency logic  
+- Behavioral segmentation  
+
+---
+
+### 🔹 Why SQL Views Were Used
+- Centralizes business logic  
+- Improves Power BI performance  
+- Enables reuse across dashboards  
+- Reflects real analytics engineering workflows  
+
+---
+
+## 📊 Power BI Dashboard Overview
+
+The Power BI dashboard connects directly to the SQL views and includes:
 
 ### 1️⃣ Monthly Churn Rate (Line Chart)
 - X-axis: Month  
-- Y-axis: Churn rate (%)  
-- Shows churn trends and volatility over time.
+- Y-axis: Churn Rate (%)  
+- Shows churn trends and volatility over time  
 
 ### 2️⃣ KPI Cards
 - Total Active Users  
 - Total Ghost Users  
 
 ### 3️⃣ Subscription Status Distribution by Plan
-- Stacked bar chart showing Active / Paused / Canceled subscriptions.
+- Stacked bar chart showing Active / Paused / Canceled subscriptions  
 
 ### 4️⃣ Ghost Users Distribution by Plan
-- Pie chart showing ghost user concentration across plans.
+- Pie chart highlighting ghost user concentration across plans  
 
 ---
 
 ## 🛠 Tools & Technologies
-
 - **Database:** PostgreSQL  
 - **Data Modeling:** SQL (CTEs, Views, Window Functions)  
 - **Visualization:** Power BI  
-- **Metrics Layer:** SQL Views + Power BI measures  
-
----
-
-## 📈 Key Insights (Example)
-- A high percentage of ghost users indicates **engagement risk** despite active subscriptions.
-- Churn volatility highlights the need for **monthly monitoring**, not just annual metrics.
-- Subscription plans show similar ghost-user behavior, suggesting **product-level engagement issues** rather than pricing alone.
-
----
-
-## 🚀 Outcome
-This project showcases how raw data can be transformed into **actionable business insights** using structured SQL modeling and executive-friendly dashboards.
 
 ---
 
