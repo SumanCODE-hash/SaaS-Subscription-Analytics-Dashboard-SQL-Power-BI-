@@ -94,7 +94,7 @@ Ghost users are customers with an **Active subscription** but **no activity in t
 ---
 
 ## 📊 Power BI Dashboard Overview
-![Dashboard Screenshot](Dashboards_picture/Screenshot 2025-12-22 160814.png)
+![Dashboard Screenshot](Dashboards_picture/dashboard_picture.png)
 
 The Power BI dashboard connects directly to the SQL views and includes:
 
